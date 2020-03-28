@@ -1,4 +1,4 @@
-package com.soliva.domain.repositorio;
+package com.soliva.domain.repository;
 
 import java.util.List;
 
