@@ -9,7 +9,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,13 +59,13 @@ public class ProdutoController {
 	
 
 	@GetMapping("/{id}")
-	@ResponseStatus(NO_CONTENT)
 	public Produto getById( @PathVariable Integer id ) {
 		return repository
 				.findById(id)
 				.orElseThrow( () -> new ResponseStatusException(NOT_FOUND, "Produto não Encontrado."));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping
     public List<Produto> find(Produto filtro ){
         ExampleMatcher matcher = ExampleMatcher
@@ -74,7 +73,8 @@ public class ProdutoController {
                 .withIgnoreCase()
                 .withStringMatcher( ExampleMatcher.StringMatcher.CONTAINING );
 
-        Example example = Example.of(filtro, matcher);
+        @SuppressWarnings("rawtypes")
+		Example example = Example.of(filtro, matcher);
         return repository.findAll(example);
     }
 }
