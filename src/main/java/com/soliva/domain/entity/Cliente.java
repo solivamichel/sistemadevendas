@@ -36,6 +36,9 @@ public class Cliente implements Serializable {
 	@Column(name = "nome", length = 100)
 	private String nome;
 	
+	@Column(name = "cpf", length = 11)
+	private String cpf;
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY )
 	private Set<Pedido> pedidos;
